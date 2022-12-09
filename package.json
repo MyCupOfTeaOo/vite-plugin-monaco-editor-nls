@@ -1,6 +1,6 @@
 {
-    "name": "vite-plugin-monaco-editor-nls",
-    "version": "2.0.3",
+    "name": "@ubia/vite-plugin-monaco-editor-nls",
+    "version": "2.0.4",
     "keyword": "rollup-plugin vite-plugin",
     "license": "MIT",
     "repository": "https://github.com/MyCupOfTeaOo/vite-plugin-monaco-editor-nls",
@@ -12,8 +12,8 @@
         "vite": ">=2.3.0"
     },
     "scripts": {
-        "build": "rimraf dist && tsc -p . && pnpm exec copy src/locale/* dist/locale",
-        "pub": "npm publish",
+        "build": "rimraf dist && tsc -p . && node node_modules/copy/bin/cli.js src/locale/* dist/locale",
+        "release": "npm run build && release-it",
         "example": "pnpm run build && pnpm -C example build"
     },
     "devDependencies": {
@@ -21,8 +21,12 @@
         "copy": "^0.3.2",
         "esbuild": "^0.14.53",
         "magic-string": "^0.25.7",
+        "release-it": "^15.5.1",
         "rimraf": "^3.0.2",
         "typescript": "^4.2.3",
         "vite": "3.0.4"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

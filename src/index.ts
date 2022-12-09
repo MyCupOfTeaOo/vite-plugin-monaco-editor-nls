@@ -29,7 +29,7 @@ export enum Languages {
 
 export interface Options {
     locale: Languages;
-    localeData?:Record<string, any>
+    localeData?: Record<string, any>;
 }
 
 /**
@@ -41,7 +41,10 @@ export interface Options {
 export function esbuildPluginMonacoEditorNls(
     options: Options = {locale: Languages.en_gb},
 ): EsbuildPlugin {
-    const CURRENT_LOCALE_DATA = getLocalizeMapping(options.locale,options.localeData);
+    const CURRENT_LOCALE_DATA = getLocalizeMapping(
+        options.locale,
+        options.localeData,
+    );
 
     return {
         name: 'esbuild-plugin-monaco-editor-nls',
@@ -76,7 +79,10 @@ export function esbuildPluginMonacoEditorNls(
  * @returns
  */
 export default function (options: Options = {locale: Languages.en_gb}): Plugin {
-    const CURRENT_LOCALE_DATA = getLocalizeMapping(options.locale,options.localeData);
+    const CURRENT_LOCALE_DATA = getLocalizeMapping(
+        options.locale,
+        options.localeData,
+    );
 
     return {
         name: 'rollup-plugin-monaco-editor-nls',
@@ -97,7 +103,7 @@ export default function (options: Options = {locale: Languages.en_gb}): Plugin {
                 const re = /(?:monaco-editor[\/\\]esm[\/\\])(.+)(?=\.js)/;
                 if (re.exec(filepath) && code.includes('localize(')) {
                     let path = RegExp.$1;
-                    path=path.replaceAll('\\','/')
+                    path = path.replaceAll('\\', '/');
                     if (JSON.parse(CURRENT_LOCALE_DATA)[path]) {
                         code = code.replace(
                             /localize\(/g,
@@ -133,7 +139,7 @@ function transformLocalizeFuncCode(
     const re = /(?:monaco-editor[\\\/]esm[\\\/])(.+)(?=\.js)/;
     if (re.exec(filepath)) {
         let path = RegExp.$1;
-        path=path.replaceAll('\\','/')
+        path = path.replaceAll('\\', '/');
 
         // if (filepath.includes('contextmenu')) {
         //     console.log(filepath);
@@ -153,8 +159,11 @@ function transformLocalizeFuncCode(
  * @param localeData
  * @returns
  */
-function getLocalizeMapping(locale: Languages,localeData:Record<string, any>|undefined=undefined) {
-    if(localeData)return JSON.stringify(localeData)
+function getLocalizeMapping(
+    locale: Languages,
+    localeData: Record<string, any> | undefined = undefined,
+) {
+    if (localeData) return JSON.stringify(localeData);
     const locale_data_path = path.join(__dirname, `./locale/${locale}.json`);
     return fs.readFileSync(locale_data_path) as unknown as string;
 }
