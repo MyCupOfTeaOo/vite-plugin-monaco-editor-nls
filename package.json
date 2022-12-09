@@ -1,6 +1,6 @@
 {
     "name": "@ubia/vite-plugin-monaco-editor-nls",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "keyword": "rollup-plugin vite-plugin",
     "license": "MIT",
     "repository": "https://github.com/MyCupOfTeaOo/vite-plugin-monaco-editor-nls",
